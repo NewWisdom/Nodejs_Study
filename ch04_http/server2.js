@@ -5,10 +5,12 @@ const fs=require('fs');
 
 // 서버 만들기
 const server = http.createServer((req,res)=>{
+    // server2.html 파일 읽기
     fs.readFile('./server2.html',(err,data)=>{
         if(err){
             throw err;
         }
+        // res 객체에 html 파일 담음
         res.end(data);
     })
 }).listen(8080,()=>{ // 서버를 요청 대기 상태로 만든다.

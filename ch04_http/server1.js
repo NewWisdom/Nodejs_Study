@@ -4,12 +4,15 @@ const http = require('http')
 
 // 서버 만들기
 const server = http.createServer((req,res)=>{
-    // req : 요청, rea : 응답
+    // req : 요청, res : 응답
     console.log('서버 실행');
     res.write('<h1>Hello Node</h1>') // res.write 는 여러번 쓸 수 있다.
     res.write('<h2>Hello Node</h2>')
     res.end('<p>Hello Server!</p>') // 응답이 끝남을 알려줌
-}).listen(8080,()=>{ // 서버를 요청 대기 상태로 만든다.
+})
+
+// 서버를 요청 대기 상태로 만든다.
+server.listen(8080,()=>{ 
     console.log('8080번 포트에서 서버 대기중입니다.')
 });
 
