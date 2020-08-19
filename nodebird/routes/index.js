@@ -22,5 +22,6 @@ router.get('/join',isNotLoggedIn,(req,res)=>{
   });
 });
 
-
+router.use('/upload',require('./upload'));
+router.use('/user',require('./users'));
 module.exports = router;
