@@ -1,13 +1,22 @@
 var express = require('express');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
+const { Post, User } = require('../models');
 var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('main', { 
-    title: 'Express',
-    twits:[],
-    user:req.user 
+  Post.findAll({ 
+    include : { //user model에서 불러옴
+      model : User,
+      attributes : ['id','nick'],
+    },
+  })
+  .then((posts)=>{ // 그러면 posts에 담긴다.
+    res.render('main',{
+      title:'NodeBird',
+      twits:posts,
+      user:req.user,
+    })
   });
 });
 
@@ -22,6 +31,5 @@ router.get('/join',isNotLoggedIn,(req,res)=>{
   });
 });
 
-router.use('/upload',require('./upload'));
 router.use('/user',require('./users'));
 module.exports = router;

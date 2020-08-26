@@ -7,12 +7,13 @@ var logger = require('morgan');
 var passport = require('passport');
 const dotenv = require('dotenv');
 
+
 dotenv.config();
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var authRouter = require('./routes/auth');
-var uploadRouter = require('./routes/upload')
+var postRouter = require('./routes/post')
 const { sequelize } = require('./models');
 const passportConfig = require('./passport');
 
@@ -30,6 +31,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/img',express.static(path.join(__dirname, 'uploads'))); // img/abc.png
 
 app.use(session({
   resave: false,
@@ -43,10 +45,11 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+
 app.use('/', indexRouter);
 //app.use('/users', usersRouter);
 app.use('/auth',authRouter);
-//app.use('/upload',uploadRouter);
+app.use('/post',postRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

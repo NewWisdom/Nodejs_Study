@@ -8,7 +8,6 @@ const sequelize = new Sequelize(
 );
 
 
-
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
@@ -28,7 +27,7 @@ db.Hashtag.belongsToMany(db.Post,{through:'PostHashtag'})
 // as : 매칭 모델 이름
 // foreignKey : 상대 테이블 아이디
 db.User.belongsToMany(db.User,{through:'Follow', as: 'Followers',foreignKey:'followingId'}); // 일반인
-db.User.belongsToMany(db.User,{through:'Follow', as: 'Following', foreignKey :"followerId"}); // 유명인
+db.User.belongsToMany(db.User,{through:'Follow', as: 'Followings', foreignKey :"followerId"}); // 유명인
 
 //1 제로
 // 2 네로
