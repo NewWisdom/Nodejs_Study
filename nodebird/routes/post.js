@@ -4,6 +4,7 @@ const multer = require('multer');
 const path = require('path');
 const {isLoggedIn} = require('./middlewares')
 const { Post, Hashtag, User } = require('../models');
+const e = require('express');
 
 var upload = multer({
     storage: multer.diskStorage({
@@ -50,13 +51,22 @@ router.post('/',isLoggedIn,upload2.none(),async (req,res,next)=>{
     }
 })
 
+router.delete('/:id',async(req,res,next)=>{
+    try{
+        await Post.destroy({where:{id:req.params.id, userId : req.user.id}}) // 내가 쓴 게시글인지
+        res.send("OK")
+    }catch(error){
+        console.error(error)
+    }
+})
+
 router.get('/hashtag',async(req,res,next)=>{
     const query = req.query.hashtag;
     if(!query){
         return res.redirect('/');
     }
     try{
-        const hashtag = await Hashtag.find({where:{title:query}});
+        const hashtag = await Hashtag.findAll({where:{title:query}});
         let posts = [];
         if(hashtag){
             // A.getB : 관계있는 row 조회
@@ -75,6 +85,27 @@ router.get('/hashtag',async(req,res,next)=>{
     }catch(error){
         console.error(error)
         next(error);
+    }
+})
+router.post('/:id/like',async(req,res,next)=>{
+    try{
+        const post = await Post.findOne({where:{id:req.params.id}})
+        await post.addLiker(req.user.id)
+        res.redirect('/')
+    } catch(error){
+        console.error(error);
+        next(error)
+    }
+})
+
+router.delete('/:id/unlike',async(req,res,next)=>{
+    try{
+        const post = await Post.findOne({where:{id:req.params.id}})
+        await post.removeLiker(req.user.id)
+        res.send('OK')
+    } catch(error){
+        console.error(error);
+        next(error)
     }
 })
 module.exports = router;
