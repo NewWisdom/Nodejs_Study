@@ -6,6 +6,8 @@ const db = {};
 const sequelize = new Sequelize(
   config.database, config.username, config.password, config,
 );
+
+
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
@@ -26,7 +28,7 @@ db.Hashtag.belongsToMany(db.Post,{through:'PostHashtag'})
 // as : 매칭 모델 이름
 // foreignKey : 상대 테이블 아이디
 db.User.belongsToMany(db.User,{through:'Follow', as: 'Followers',foreignKey:'followingId'}); // 일반인
-db.User.belongsToMany(db.User,{through:'Follow', as: 'Following', foreignKey :"followerId"}); // 유명인
+db.User.belongsToMany(db.User,{through:'Follow', as: 'Followings', foreignKey :"followerId"}); // 유명인
 
 //1 제로
 // 2 네로
@@ -36,7 +38,7 @@ db.User.belongsToMany(db.User,{through:'Follow', as: 'Following', foreignKey :"f
 // 3-1
 
 db.User.belongsToMany(db.Post,{through:'Like'})
-db.Post.belongsToMany(db.User,{through:'Like'})
+db.Post.belongsToMany(db.User,{through:'Like', as:'Liker'})
 
 db.User.hasMany(db.Domain);
 db.Domain.belongsTo(db.User);

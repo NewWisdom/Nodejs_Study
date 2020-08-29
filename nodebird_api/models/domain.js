@@ -15,10 +15,10 @@ module.exports = (sequelize, DataType)=>{
     },
     {
         timestamps:true,
-        paranoid:true,
-        validate:{
+        paranoid:true, // 삭제 기록
+        validate:{ // 검증
             unknownType(){
-                if(this.type === 'free'&&this.type !=='premium'){
+                if(this.type !== 'free'&&this.type !=='premium'){
                     throw new Error('type 컬럼은 free거나 premium이어야 합니다.')
                 }
             }
