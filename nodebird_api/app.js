@@ -13,6 +13,7 @@ var indexRouter = require('./routes/index');
 const passportConfig = require('./passport');
 const authRouter = require('./routes/auth');
 const v1Router = require('./routes/v1')
+const v2Router = require('./routes/v2')
 const { sequelize } = require('./models');
 
 
@@ -46,6 +47,7 @@ app.use('/', indexRouter);
 app.use('/auth', authRouter);
 //app.use('/users', usersRouter);
 app.use('/v1',v1Router)
+app.use('/v2',v2Router)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

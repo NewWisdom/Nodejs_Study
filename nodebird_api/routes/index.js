@@ -28,6 +28,7 @@ router.post('/domain',(req,res,next)=>{
     host:req.body.host,
     type:req.body.type,
     clientSecret:uuidv4(), // 비밀키 발급 해 줄거임, 고유한 값을 만들어주는 패키지
+    frontSecret:uuidv4()
   })
   .then(() => {
     console.log("user :",req.user.id)

@@ -11,6 +11,10 @@ module.exports = (sequelize, DataType)=>{
         },clientSecret :{
             type:DataType.STRING(40),
             allowNull:false
+        },
+        frontSecret :{
+            type:DataType.STRING(40),
+            allowNull:false
         }
     },
     {
